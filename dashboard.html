@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemac | Painel do Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f4f9f7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .dashboard-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.95rem;
+        }
+        .user-name strong {
+            color: #0d2137;
+        }
+        .btn-exit {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ff4d4d;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-exit:hover {
+            opacity: 0.7;
+        }
+
+        .dashboard-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .dashboard-main h1 {
+            font-size: 2.8rem;
+            color: #0d2137;
+            margin-bottom: 10px;
+        }
+        .dashboard-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1100px;
+        }
+        .dash-card {
+            background: white;
+            padding: 50px 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .dash-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: rgba(0, 168, 132, 0.2);
+        }
+        .card-icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+        .icon-services {
+            background-color: #e6f7f3;
+            color: #00a884;
+        }
+        .icon-products {
+            background-color: #eef4ff;
+            color: #4a90e2;
+        }
+        .icon-budget {
+            background-color: #fff4e6;
+            color: #f39c12;
+        }
+        .dash-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #0d2137;
+        }
+        .dash-card p {
+            color: #777;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .back-home-footer {
+            margin-top: 60px;
+        }
+        .btn-back-home {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .btn-back-home:hover {
+            color: #00a884;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-main h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <img src="logo.png" alt="Sistemac" style="height: 40px;">
+            </div>
+            <div class="user-meta">
+                <div class="user-name">Olá, <strong id="display-name">André Cavalcante</strong></div>
+                <a href="login.html" class="btn-exit">
+                    <i data-lucide="log-out" style="width: 18px;"></i>
+                    Sair
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <h1>Painel do Cliente</h1>
+        <p class="dashboard-subtitle">Escolha uma opção para continuar</p>
+
+        <div class="cards-container">
+            <!-- Requisição de Serviços -->
+            <a href="service-request.html" style="text-decoration: none;">
+                <div class="dash-card">
+                    <div class="card-icon-box icon-services">
+                        <i data-lucide="wrench" style="width: 40px; height: 40px;"></i>
+                    </div>
+                    <h2>Requisição de Serviços</h2>
+                    <p>Solicite manutenção de impressoras, computadores ou sistemas de monitoramento</p>
+                </div>
+            </a>
+
+            <!-- Requisição de Produtos -->
+            <a href="product-request.html" style="text-decoration: none;">
+                <div class="dash-card">
+                    <div class="card-icon-box icon-products">
+                        <i data-lucide="shopping-cart" style="width: 40px; height: 40px;"></i>
+                    </div>
+                    <h2>Requisição de Produtos</h2>
+                    <p>Solicite orçamento de produtos e peças para seus equipamentos</p>
+                </div>
+            </a>
+
+            <!-- Orçamento -->
+            <a href="estimate-request.html" style="text-decoration: none;">
+                <div class="dash-card">
+                    <div class="card-icon-box icon-budget">
+                        <i data-lucide="file-text" style="width: 40px; height: 40px;"></i>
+                    </div>
+                    <h2>Orçamento</h2>
+                    <p>Solicite um orçamento detalhado de serviços e itens para sua empresa</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="back-home-footer">
+            <a href="index.html" class="btn-back-home">
+                <i data-lucide="home" style="width: 18px;"></i>
+                Voltar para Home
+            </a>
+        </div>
+    </main>
+
+    <!-- Floating Chat Placeholder (Like in screenshot) -->
+    <div class="whatsapp-btn" style="background: #12343d;">
+        <i data-lucide="headphones"></i>
+        <span>Talk with Us</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        // Simulação de pegar nome do usuário logado
+        const savedName = localStorage.getItem('sistemac_user_name');
+        if (savedName) {
+            document.getElementById('display-name').innerText = savedName;
+        }
+    </script>
+</body>
+</html>

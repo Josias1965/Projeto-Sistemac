@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemac | Admin Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #17212e; /* Escuro como na imagem */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon-box {
+            background-color: #df2a2a;
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 12px rgba(223, 42, 42, 0.4);
+        }
+
+        .icon-box svg {
+            color: white;
+            width: 32px;
+            height: 32px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #8c9baf;
+            font-size: 0.95rem;
+        }
+
+        .login-card {
+            background-color: white;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .default-credentials {
+            background-color: #f0f7ff;
+            border: 1px solid #cce3ff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            color: #3b82f6;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .default-credentials strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+            color: #1e293b;
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+        }
+
+        .form-control:focus {
+            border-color: #df2a2a;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #df2a2a;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: #c51e1e;
+        }
+
+        /* Talk with us floating button */
+        .talk-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #1e293b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: background-color 0.2s;
+        }
+
+        .talk-btn:hover {
+            background-color: #0f172a;
+        }
+
+        .talk-btn svg {
+            color: #10b981; /* Green accent */
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="header">
+            <div class="icon-box">
+                <i data-lucide="shield"></i>
+            </div>
+            <h1>Área Administrativa</h1>
+            <p>Acesso restrito a administradores</p>
+        </div>
+
+        <div class="login-card">
+            <div class="default-credentials">
+                <strong>Primeiro acesso:</strong>
+                Usuário: admin<br>
+                Senha: sistemac2024
+            </div>
+
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="username">Nome de Usuário</label>
+                    <input type="text" id="username" class="form-control" placeholder="admin" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Acessar Painel</button>
+            </form>
+        </div>
+    </div>
+
+    <button class="talk-btn">
+        <i data-lucide="headphones"></i>
+        Talk with Us
+    </button>
+
+    <script>
+        lucide.createIcons();
+
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            let isAdminValid = false;
+            
+            // Check default hardcoded admin
+            if (user === 'admin' && pass === 'sistemac2024') {
+                isAdminValid = true;
+            } else {
+                // Check in localStorage
+                const stored = localStorage.getItem('sistemac_admins');
+                if (stored) {
+                    const users = JSON.parse(stored);
+                    const foundUser = users.find(u => u.email === user && u.pass === pass);
+                    if (foundUser) {
+                        isAdminValid = true;
+                    }
+                }
+            }
+
+            if (isAdminValid) {
+                // To do: Redirecionar para o painel de admin que será desenvolvido em breve
+                window.location.href = '../admin-dashboard.html';
+            } else {
+                alert('Credenciais incorretas.');
+            }
+        });
+    </script>
+</body>
+</html>

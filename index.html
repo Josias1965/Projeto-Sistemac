@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistemac - Soluções especialistas em manutenção de impressoras, computadores e sistemas de monitoramento.">
+    <title>Sistemac | Assistência Técnica Especializada</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <img src="logo.png" alt="Sistemac Logo">
+                <span>Sistemac</span>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="login.html" class="btn btn-secondary">Clientes</a>
+                <button class="mobile-toggle" aria-label="Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="nav-overlay"></div>
+    <div class="nav-mobile">
+        <ul class="nav-mobile-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#depoimentos">Depoimentos</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1>Soluções Técnicas que <span class="highlight">Transformam</span> seu Negócio</h1>
+                    <p>Especialistas em manutenção de impressoras, computadores e sistemas de monitoramento. Atendimento rápido, técnicos qualificados e garantia de qualidade.</p>
+                    <div class="hero-btns">
+                        <a href="#contato" class="btn btn-primary">Solicitar Orçamento</a>
+                        <a href="#servicos" class="btn btn-outline">Conheça Nossos Serviços</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="servicos" class="services section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nossos Serviços Especializados</h2>
+                    <p>Oferecemos soluções completas em manutenção técnica com qualidade garantida e atendimento personalizado para sua empresa.</p>
+                </div>
+                <div class="services-grid">
+                    <!-- Service 1 -->
+                    <div class="service-card" data-reveal>
+                        <div class="service-icon">
+                            <i data-lucide="printer"></i>
+                        </div>
+                        <h3>Manutenção de Impressoras Laser</h3>
+                        <p>Diagnóstico completo, troca de peças originais, limpeza técnica e calibração. Garantimos o funcionamento perfeito de suas impressoras com agilidade e qualidade.</p>
+                        <ul class="service-features">
+                            <li><i data-lucide="check"></i> Diagnóstico Técnico</li>
+                            <li><i data-lucide="check"></i> Peças Originais</li>
+                            <li><i data-lucide="check"></i> Garantia de Serviço</li>
+                        </ul>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="service-card" data-reveal>
+                        <div class="service-icon">
+                            <i data-lucide="monitor"></i>
+                        </div>
+                        <h3>Manutenção de Computadores e Notebooks</h3>
+                        <p>Formatação, upgrade de hardware, remoção de vírus, otimização de desempenho e instalação e remoção de sistema. Soluções completas para manter seus equipamentos funcionando perfeitamente.</p>
+                        <ul class="service-features">
+                            <li><i data-lucide="check"></i> Upgrade de Hardware</li>
+                            <li><i data-lucide="check"></i> Otimização</li>
+                            <li><i data-lucide="check"></i> Instalação e Remoção de Sistema</li>
+                        </ul>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="service-card" data-reveal>
+                        <div class="service-icon">
+                            <i data-lucide="camera"></i>
+                        </div>
+                        <h3>Sistemas de Monitoramento</h3>
+                        <p>Instalação, configuração, manutenção e reparo de câmeras de segurança e DVRs. Proteja seu patrimônio com sistemas de monitoramento confiáveis e eficientes.</p>
+                        <ul class="service-features">
+                            <li><i data-lucide="check"></i> Instalação Completa</li>
+                            <li><i data-lucide="check"></i> Configuração</li>
+                            <li><i data-lucide="check"></i> Suporte Técnico</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="depoimentos" class="testimonials section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>O que Nossos Clientes Dizem</h2>
+                    <p>A satisfação dos nossos clientes é nossa maior conquista. Veja o que eles têm a dizer sobre nossos serviços.</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                        </div>
+                        <p>"A Sistemac resolveu nossos problemas com impressoras de forma rápida e eficiente. O atendimento é excepcional e os técnicos são muito qualificados. Recomendo!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <strong>Carlos Silva</strong>
+                                <span>Gerente de TI, TechSolutions Ltda</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                        </div>
+                        <p>"Nosso sistema de monitoramento estava com problemas críticos. A equipe da Sistemac foi extremamente profissional e resolveu tudo em poucas horas. Excelente serviço!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <strong>Ana Paula Oliveira</strong>
+                                <span>Diretora Administrativa, Clínica Saúde Total</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                            <i data-lucide="star" class="fill"></i>
+                        </div>
+                        <p>"Precisávamos de manutenção urgente em nossos computadores. A Sistemac atendeu prontamente e com muita competência. Agora temos um parceiro de confiança."</p>
+                        <div class="testimonial-author">
+                            <div class="author-info">
+                                <strong>Roberto Mendes</strong>
+                                <span>Sócio Proprietário, Advocacia Mendes & Associados</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contato" class="contact section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Entre em Contato</h2>
+                        <p>Precisa de assistência técnica? Preencha o formulário e nossa equipe entrará em contato rapidamente para atender suas necessidades.</p>
+                        
+                        <div class="contact-item">
+                            <div class="icon-box"><i data-lucide="phone"></i></div>
+                            <div>
+                                <strong>Telefone</strong>
+                                <p>(11) 3456-7890</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon-box"><i data-lucide="mail"></i></div>
+                            <div>
+                                <strong>Email</strong>
+                                <p>contato@sistemac.com.br</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="icon-box"><i data-lucide="clock"></i></div>
+                            <div>
+                                <strong>Horário de Atendimento</strong>
+                                <p>Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Nome Completo</label>
+                                <input type="text" id="name" name="name" placeholder="Seu nome" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(11) 99999-9999">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Mensagem</label>
+                                <textarea id="message" name="message" placeholder="Descreva sua necessidade..." rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Enviar Mensagem</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="Sistemac Logo">
+                    <span>Sistemac</span>
+                </div>
+                <p>&copy; 2024 Sistemac Assistência Técnica. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/message/Y33DBY6RR6AKL1" target="_blank" class="whatsapp-btn" aria-label="Fale conosco no WhatsApp">
+        <i data-lucide="phone-call"></i>
+        <span>Fale Conosco</span>
+    </a>
+
+    <script src="main.js"></script>
+    <script>
+        // Init Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>

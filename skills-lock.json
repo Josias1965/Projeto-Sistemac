@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-tools": {
+      "source": "inference-sh/skills",
+      "sourceType": "github",
+      "computedHash": "00f8ff84839ec5fea4c04c0c7a4d35a5106384469cb66e99a8e964a5b292460a"
+    },
+    "ai-image-generation": {
+      "source": "inferen-sh/skills",
+      "sourceType": "github",
+      "computedHash": "527120800e33663ee926ee04be0089443a65d5efcedb5b8baa9430ce0b24d7af"
+    }
+  }
+}

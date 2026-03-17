@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemac | Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f0f7f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .auth-card {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+        .auth-logo {
+            width: 120px;
+            margin: 0 auto 25px;
+        }
+        .auth-card h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #0d2137;
+        }
+        .auth-subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .auth-form {
+            text-align: left;
+        }
+        .form-group label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .form-group input {
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            padding: 14px 18px;
+            font-size: 1rem;
+        }
+        .auth-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+        .btn-register {
+            color: #00a884;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .btn-back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            color: #00a884;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-card">
+        <img src="logo.png" alt="Sistemac" class="auth-logo">
+        <h1>Autenticação de Usuário</h1>
+        <p class="auth-subtitle">Acesse sua conta para gerenciar suas requisições</p>
+
+        <form class="auth-form" id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="seu@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <div class="auth-footer">
+                <a href="register.html" class="btn-register">Registrar</a>
+                <button type="submit" class="btn btn-primary" style="padding: 12px 35px; border-radius: 12px; font-size: 1.1rem;">Enviar</button>
+            </div>
+
+            <a href="index.html" class="btn-back">
+                <i data-lucide="arrow-left" style="width: 18px;"></i>
+                Voltar para Home
+            </a>
+        </form>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        lucide.createIcons();
+        
+        const form = document.getElementById('login-form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulação de salvamento de nome para o painel
+            localStorage.setItem('sistemac_user_name', 'André Cavalcante');
+            
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

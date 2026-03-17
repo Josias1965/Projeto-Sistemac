@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemac | Solicitação de Orçamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-green: #0fb478;
+            --primary-dark: #0d2137;
+            --bg-light: #f3f9f7;
+            --border-color: #e2ece6;
+            --input-bg: #f8fbf9;
+            --secondary-text: #666;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .request-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .top-logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-top {
+            width: 120px;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header-section h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 auto;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .req-number-badge {
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 12px rgba(15, 180, 120, 0.2);
+            position: absolute;
+            right: 0;
+        }
+
+        .req-number-badge span {
+            display: block;
+            font-size: 1.1rem;
+            margin-top: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--secondary-text);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-group input {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            color: var(--primary-dark);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+            background: white;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .req-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-bottom: 30px;
+        }
+
+        .req-table th {
+            text-align: left;
+            padding: 0 15px 10px;
+            color: var(--secondary-text);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .req-table td {
+            padding: 0;
+        }
+
+        .table-input {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .table-input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .input-qty { text-align: center; }
+        .input-readonly-text { 
+            background: #f1f5f9; 
+            border: 1px solid var(--border-color);
+            color: #64748b;
+            font-weight: 500;
+            text-align: center;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-total-sector { 
+            background: #ecfdf5; 
+            border: 1px solid #d1fae5;
+            color: #059669;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .row-cell { padding: 0 5px; }
+
+        .obs-section {
+            margin-top: 20px;
+        }
+
+        .obs-textarea {
+            width: 100%;
+            height: 120px;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 0.95rem;
+            outline: none;
+            resize: none;
+            transition: all 0.3s;
+        }
+
+        .obs-textarea:focus {
+            border-color: var(--primary-green);
+        }
+
+        .char-counter {
+            text-align: left;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary-text);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .btn-back:hover {
+            color: var(--primary-dark);
+        }
+
+        .actions-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .total-summary {
+            background: #ecfdf5;
+            border: 1px solid #d1fae5;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .total-summary .label {
+            display: block;
+            font-size: 0.7rem;
+            color: #059669;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .total-summary .value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+
+        .btn-submit {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(15, 180, 120, 0.2);
+        }
+
+        .btn-submit:hover {
+            background-color: #0d9664;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 180, 120, 0.3);
+        }
+
+        /* Floating Talk Button */
+        .talk-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #112d42;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .header-section { flex-direction: column; gap: 20px; }
+            .req-number-badge { position: static; margin: 0 auto; }
+            .footer-container { flex-direction: column-reverse; gap: 30px; }
+            .actions-right { flex-direction: column; width: 100%; }
+            .total-summary, .btn-submit { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="request-card">
+        <div class="top-logo-container">
+            <img src="logo.png" alt="Sistemac" class="logo-top">
+        </div>
+        
+        <div class="header-section">
+            <h1>Solicitação de Orçamento</h1>
+            <div class="req-number-badge">
+                Nº do Orçamento
+                <span id="req-number">ORC-0001</span>
+            </div>
+        </div>
+
+        <form id="estimate-req-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="companyName" value="André Cavalcante" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="text" id="currentDate" readonly>
+                </div>
+            </div>
+
+            <h3 class="section-title">Itens do Orçamento</h3>
+            
+            <table class="req-table">
+                <thead>
+                    <tr>
+                        <th style="width: 100px;">Quantidade</th>
+                        <th>Descrição do Item</th>
+                        <th style="width: 140px;">Vlr_Unit</th>
+                        <th style="width: 140px;">Valor Total (R$)</th>
+                    </tr>
+                </thead>
+                <tbody id="items-body">
+                    <!-- Rows will be injected by JS or hardcoded for layout -->
+                </tbody>
+            </table>
+
+            <div class="obs-section">
+                <label class="section-title" style="display:block; margin-bottom:10px;">Observações (opcional)</label>
+                <textarea class="obs-textarea" id="observations" maxlength="500" placeholder="Informações adicionais, prazo desejado, condições especiais..."></textarea>
+                <div class="char-counter" id="char-count">0/500 caracteres</div>
+            </div>
+
+            <div class="footer-container">
+                <a href="dashboard.html" class="btn-back">
+                    <i data-lucide="arrow-left" style="width: 18px;"></i>
+                    Voltar ao Painel
+                </a>
+                
+                <div class="actions-right">
+                    <div class="total-summary">
+                        <span class="label">Status do Orçamento</span>
+                        <span class="value" id="grand-total" style="font-size: 1rem;">Aguardando Vendedor</span>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i data-lucide="send" style="width: 20px;"></i>
+                        Enviar Orçamento
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="talk-button">
+        <i data-lucide="headphones"></i>
+        Talk with Us
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Prefill Name and Date
+        const savedName = localStorage.getItem('sistemac_user_name');
+        if (savedName) {
+            document.getElementById('companyName').value = savedName;
+        }
+
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString('pt-BR');
+        document.getElementById('currentDate').value = formattedDate;
+
+        // Auto-Numbering logic
+        let lastNum = parseInt(localStorage.getItem('sistemac_last_estimate_num') || "0");
+        const nextNum = lastNum + 1;
+        const displayNum = `ORC-${nextNum.toString().padStart(4, '0')}`;
+        document.getElementById('req-number').innerText = displayNum;
+
+        // Generate Table Rows
+        const itemsBody = document.getElementById('items-body');
+        const rowCount = 8;
+        
+        for (let i = 0; i < rowCount; i++) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="row-cell"><input type="number" class="table-input input-qty" value="0" min="0"></td>
+                <td class="row-cell"><input type="text" class="table-input input-desc" placeholder="Descreva o item ou serviço"></td>
+                <td class="row-cell"><div class="table-input input-readonly-text">venda</div></td>
+                <td class="row-cell"><div class="table-input input-total-sector">venda</div></td>
+            `;
+            itemsBody.appendChild(tr);
+        }
+
+        // Calculation Logic removed as per user request
+
+        // Char Counter
+        const observations = document.getElementById('observations');
+        const charCount = document.getElementById('char-count');
+        observations.addEventListener('input', () => {
+            const len = observations.value.length;
+            charCount.innerText = `${len}/500 caracteres`;
+        });
+
+        // Form Submission
+        const form = document.getElementById('estimate-req-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Collect data
+            const rows = document.querySelectorAll('#items-body tr');
+            const items = [];
+            rows.forEach(row => {
+                const qty = parseInt(row.querySelector('.input-qty').value);
+                const desc = row.querySelector('.input-desc').value.trim();
+                if (qty > 0 && desc !== "") {
+                    items.push({ quantity: qty, description: desc, unitValue: 0 });
+                }
+            });
+
+            if (items.length === 0) {
+                alert("Por favor, adicione pelo menos um item ou serviço com quantidade maior que zero.");
+                return;
+            }
+
+            // Increment number for next time
+            localStorage.setItem('sistemac_last_estimate_num', nextNum);
+            
+            // Save to localStorage for Admin view
+            let estimates = JSON.parse(localStorage.getItem('sistemac_estimate_requests') || '[]');
+            estimates.push({
+                id: Date.now(),
+                reqNum: displayNum,
+                client: document.getElementById('companyName').value,
+                date: formattedDate,
+                status: 'Pendente',
+                items: items,
+                observations: observations.value,
+                totalValue: 0
+            });
+            localStorage.setItem('sistemac_estimate_requests', JSON.stringify(estimates));
+            
+            alert(`Solicitação de Orçamento ${displayNum} enviada com sucesso!`);
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

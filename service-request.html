@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemac | Requisição de Serviço</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f0f7f4;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .request-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .logo-top {
+            width: 120px;
+            display: block;
+            margin: 0 auto 15px;
+        }
+        .title-container {
+            text-align: center;
+            width: 100%;
+            padding: 0 100px;
+        }
+        .title-container h1 {
+            font-size: 1.8rem;
+            color: #0d2137;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+        .req-number-badge {
+            background: #00a884;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            position: absolute;
+            right: 0;
+            top: -20px;
+        }
+        .req-number-badge span {
+            font-size: 1.1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        .form-row.triple {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .form-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            background: #f8fbf9;
+            border: 1px solid #e2ece6;
+            padding: 14px 18px;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+            color: #333;
+        }
+        .form-group input:read-only {
+            background: #f1f5f2;
+            color: #777;
+            cursor: not-allowed;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #00a884;
+            box-shadow: 0 0 0 3px rgba(0, 168, 132, 0.1);
+        }
+        .char-count {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-weight: 500;
+        }
+        .btn-back:hover {
+            color: #00a884;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .req-number-badge {
+                position: static;
+                transform: none;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-row.triple {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="request-card">
+        <img src="logo.png" alt="Sistemac" class="logo-top">
+        
+        <div class="header-section">
+            <div class="title-container">
+                <h1>Requisição de Serviço</h1>
+            </div>
+            <div class="req-number-badge">
+                Nº da Requisição
+                <span id="req-number">RS-0001</span>
+            </div>
+        </div>
+
+        <form id="service-req-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="companyName" value="André Cavalcante" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="text" id="currentDate" readonly>
+                </div>
+            </div>
+
+            <div class="form-row" style="grid-template-columns: 1fr;">
+                <div class="form-group">
+                    <label>Tipo de Equipamento com Defeito</label>
+                    <select id="equipmentType" name="equipmentType">
+                        <option value="Impressora">Impressora</option>
+                        <option value="Computador">Computador</option>
+                        <option value="Monitoramento">Sistemas de Monitoramento</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row triple">
+                <div class="form-group">
+                    <label>Modelo</label>
+                    <input type="text" name="model" placeholder="Ex: Canon 2885" required>
+                </div>
+                <div class="form-group">
+                    <label>Série</label>
+                    <input type="text" name="serialNumber" placeholder="Ex: 25895118" required>
+                </div>
+                <div class="form-group">
+                    <label>Medidor (opcional)</label>
+                    <input type="text" name="meter" placeholder="Ex: 16855">
+                </div>
+            </div>
+
+            <div class="form-row" style="grid-template-columns: 1fr;">
+                <div class="form-group">
+                    <label>Descrição do Defeito</label>
+                    <textarea name="description" rows="5" placeholder="Descreva o problema aqui..." required maxlength="500"></textarea>
+                    <span class="char-count">Máximo 500 caracteres</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="dashboard.html" class="btn-back">
+                    <i data-lucide="arrow-left" style="width: 18px;"></i>
+                    Voltar ao Painel
+                </a>
+                <button type="submit" class="btn btn-primary" style="padding: 12px 40px; border-radius: 10px;">Enviar Requisição</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Prefill Name and Date
+        const savedName = localStorage.getItem('sistemac_user_name');
+        if (savedName) {
+            document.getElementById('companyName').value = savedName;
+        }
+
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString('pt-BR');
+        document.getElementById('currentDate').value = formattedDate;
+
+        // Auto-Numbering logic (Persistent for demo)
+        let lastNum = parseInt(localStorage.getItem('sistemac_last_req_num') || "0");
+        const nextNum = lastNum + 1;
+        const displayNum = `RS-${nextNum.toString().padStart(4, '0')}`;
+        document.getElementById('req-number').innerText = displayNum;
+
+        // Form Submission
+        const form = document.getElementById('service-req-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Collect data for Admin Dashboard - Using keys expected by admin-dashboard.html
+            const requestData = {
+                id: Date.now(),
+                reqNum: displayNum,
+                client: document.getElementById('companyName').value,
+                date: document.getElementById('currentDate').value,
+                equipamento: document.getElementById('equipmentType').value,
+                modelo: form.model.value,
+                serie: form.serialNumber.value,
+                medidor: form.meter.value,
+                defeito: form.description.value,
+                status: 'Pendente',
+                valor: 0
+            };
+
+            let serviceRequests = JSON.parse(localStorage.getItem('sistemac_service_requests') || '[]');
+            serviceRequests.push(requestData);
+            localStorage.setItem('sistemac_service_requests', JSON.stringify(serviceRequests));
+
+            // Increment number for next time
+            localStorage.setItem('sistemac_last_req_num', nextNum);
+            
+            alert(`Requisição ${displayNum} enviada com sucesso!\nNossa equipe técnica entrará em contato em breve.`);
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
