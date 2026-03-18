@@ -567,7 +567,9 @@ img {
         display: none; /* Mobile menu logic should be here */
     }
     .header-actions .btn {
-        display: none;
+        display: block; /* Garante que o botão de Clientes seja visto */
+        padding: 8px 16px;
+        font-size: 0.85rem;
     }
     .mobile-toggle {
         display: block;
