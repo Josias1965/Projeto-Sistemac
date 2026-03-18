@@ -14,6 +14,7 @@ export default defineSchema({
     nomeCompleto: v.string(),
     documento: v.string(), // CPF or CNPJ
     cep: v.string(),
+    telefone: v.optional(v.string()),
     endereco: v.string(),
     numero: v.string(),
     bairro: v.string(),

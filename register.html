@@ -140,10 +140,14 @@
                 </div>
             </div>
 
-            <div class="form-row full">
+            <div class="form-row">
                 <div class="form-group">
                     <label for="cep">CEP</label>
                     <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(00) 90000-0000" required>
                 </div>
             </div>
 
@@ -238,6 +242,7 @@
                             nomeCompleto: data.nomeCompleto,
                             documento: data.documento,
                             cep: data.cep,
+                            telefone: data.telefone,
                             endereco: data.endereco,
                             numero: data.numero,
                             bairro: data.bairro,

@@ -7,6 +7,7 @@ export const register = mutation({
     nomeCompleto: v.string(),
     documento: v.string(),
     cep: v.string(),
+    telefone: v.string(),
     endereco: v.string(),
     numero: v.string(),
     bairro: v.string(),
