@@ -431,6 +431,12 @@
             charCount.innerText = `${len}/500 caracteres`;
         });
 
+        // Session protection
+        const session = localStorage.getItem('sistemac_user_session');
+        if (!session) {
+            window.location.href = 'login.html';
+        }
+
         // Form Submission
         const form = document.getElementById('estimate-req-form');
         form.addEventListener('submit', (e) => {

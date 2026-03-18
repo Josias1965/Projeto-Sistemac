@@ -116,16 +116,52 @@
     <script src="main.js"></script>
     <script>
         lucide.createIcons();
-        
-        const form = document.getElementById('login-form');
 
-        form.addEventListener('submit', (e) => {
+        const CONVEX_URL = 'https://next-greyhound-619.convex.cloud';
+        const form = document.getElementById('login-form');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // Simulação de salvamento de nome para o painel
-            localStorage.setItem('sistemac_user_name', 'André Cavalcante');
-            
-            window.location.href = 'dashboard.html';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Verificando...';
+
+            try {
+                const response = await fetch(`${CONVEX_URL}/api/query`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        path: 'auth:login',
+                        args: { email, password },
+                        format: 'json'
+                    })
+                });
+
+                const result = await response.json();
+                const user = result.value;
+
+                if (user && user._id) {
+                    localStorage.setItem('sistemac_user_session', JSON.stringify({
+                        id: user._id,
+                        name: user.nomeCompleto,
+                        email: user.email
+                    }));
+                    localStorage.setItem('sistemac_user_name', user.nomeCompleto);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Email ou senha incorretos. Por favor, tente novamente ou cadastre-se.');
+                }
+            } catch (err) {
+                console.error('Erro ao conectar com o servidor:', err);
+                alert('Erro ao conectar com o servidor. Tente novamente.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Enviar';
+            }
         });
     </script>
 </body>

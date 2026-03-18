@@ -216,33 +216,60 @@
 
         // Form Submission
         const form = document.getElementById('registration-form');
-        form.addEventListener('submit', (e) => {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const CONVEX_URL = 'https://next-greyhound-619.convex.cloud';
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
-            
-            // SAVE TO LOCALSTORAGE for Admin Dashboard
-            let clients = JSON.parse(localStorage.getItem('sistemac_clients') || '[]');
-            const newClient = {
-                id: Date.now(),
-                name: data.nomeCompleto,
-                email: data.email,
-                cpf_cnpj: data.documento,
-                city_state: `${data.cidade}/${data.estado}`,
-                phone: '', // Default as it's missing in this form
-                cep: data.cep,
-                address: `${data.endereco}, ${data.numero}, ${data.bairro}`,
-                obs: ''
-            };
-            clients.push(newClient);
-            localStorage.setItem('sistemac_clients', JSON.stringify(clients));
 
-            // Save user name for pre-filling forms
-            localStorage.setItem('sistemac_user_name', data.nomeCompleto);
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Cadastrando...';
 
-            console.log('Registering user:', data);
-            alert('Cadastro enviado com sucesso para a Sistemac!\nSeja bem-vindo(a)!');
-            window.location.href = 'login.html';
+            try {
+                const response = await fetch(`${CONVEX_URL}/api/mutation`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        path: 'auth:register',
+                        args: {
+                            naturezaJuridica: data.naturezaJuridica,
+                            nomeCompleto: data.nomeCompleto,
+                            documento: data.documento,
+                            cep: data.cep,
+                            endereco: data.endereco,
+                            numero: data.numero,
+                            bairro: data.bairro,
+                            cidade: data.cidade,
+                            estado: data.estado,
+                            email: data.email,
+                            password: data.password
+                        },
+                        format: 'json'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'error' || result.errorMessage) {
+                    const msg = result.errorMessage || 'Erro ao cadastrar.';
+                    if (msg.includes('já cadastrado')) {
+                        alert('Este email já está cadastrado. Faça login ou use outro email.');
+                    } else {
+                        alert('Erro ao cadastrar: ' + msg);
+                    }
+                } else {
+                    alert('Cadastro realizado com sucesso!\nSeja bem-vindo(a)!');
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                console.error('Erro ao conectar com o servidor:', err);
+                alert('Erro ao conectar com o servidor. Tente novamente.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Cadastrar';
+            }
         });
 
 

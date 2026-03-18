@@ -221,10 +221,23 @@
     <script>
         lucide.createIcons();
         
-        // Simulação de pegar nome do usuário logado
-        const savedName = localStorage.getItem('sistemac_user_name');
-        if (savedName) {
-            document.getElementById('display-name').innerText = savedName;
+        // Session protection
+        const session = localStorage.getItem('sistemac_user_session');
+        if (!session) {
+            window.location.href = 'login.html';
+        } else {
+            const userData = JSON.parse(session);
+            document.getElementById('display-name').innerText = userData.name;
+        }
+
+        // Logout logic
+        const btnExit = document.querySelector('.btn-exit');
+        if (btnExit) {
+            btnExit.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('sistemac_user_session');
+                window.location.href = 'login.html';
+            });
         }
     </script>
 </body>

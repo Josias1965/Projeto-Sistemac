@@ -227,6 +227,12 @@
         const formattedDate = today.toLocaleDateString('pt-BR');
         document.getElementById('currentDate').value = formattedDate;
 
+        // Session protection
+        const session = localStorage.getItem('sistemac_user_session');
+        if (!session) {
+            window.location.href = 'login.html';
+        }
+        
         // Auto-Numbering logic (Persistent for demo)
         let lastNum = parseInt(localStorage.getItem('sistemac_last_req_num') || "0");
         const nextNum = lastNum + 1;
