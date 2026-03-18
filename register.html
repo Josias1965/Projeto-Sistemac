@@ -119,7 +119,11 @@
         <p class="register-subtitle">Preencha seus dados para criar sua conta</p>
 
         <form class="register-form" id="registration-form">
-            <div class="form-row full">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                </div>
                 <div class="form-group">
                     <label for="naturezaJuridica">Natureza Jurídica</label>
                     <select id="naturezaJuridica" name="naturezaJuridica">
@@ -141,10 +145,6 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
-                    <label for="cep">CEP</label>
-                    <input type="text" id="cep" name="cep" placeholder="00000-000" required>
-                </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
                     <input type="tel" id="telefone" name="telefone" placeholder="(00) 90000-0000" required>
@@ -278,11 +278,27 @@
         });
 
 
-        // CEP auto-fill simulator (Auto-preenchimento)
+        // ViaCEP integration (Auto-preenchimento real)
         document.getElementById('cep').addEventListener('blur', function() {
-            if (this.value.length >= 8) {
-                // Em uma aplicação real, aqui chamaria uma API de CEP (ViaCEP)
-                console.log('CEP detectado, carregando endereços...');
+            const cep = this.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('endereco').value = data.logradouro;
+                            document.getElementById('bairro').value = data.bairro;
+                            document.getElementById('cidade').value = data.localidade;
+                            document.getElementById('estado').value = data.uf;
+                            // Foca no campo número após o preenchimento
+                            document.getElementById('numero').focus();
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar CEP:', error);
+                    });
             }
         });
     </script>
