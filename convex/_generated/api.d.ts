@@ -12,6 +12,7 @@ import type * as admin from "../admin.js";
 import type * as auth from "../auth.js";
 import type * as messages from "../messages.js";
 import type * as requests from "../requests.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -24,6 +25,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   messages: typeof messages;
   requests: typeof requests;
+  users: typeof users;
 }>;
 
 /**

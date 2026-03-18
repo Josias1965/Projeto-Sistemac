@@ -1273,65 +1273,41 @@
         // CLIENTS LOGIC
         // ============================================
 
-        function loadClients(filterQuery = '') {
+        const CONVEX_URL_CLIENTS = 'https://next-greyhound-619.convex.cloud';
+        let allClients = [];
+
+        function renderClients(clients, filterQuery = '') {
             const listObj = document.getElementById('clients-list-container');
             listObj.innerHTML = '';
-            
-            let clients = [];
-            const stored = localStorage.getItem('sistemac_clients');
-            
-            if (stored) {
-                clients = JSON.parse(stored);
-                
-                // MIGRATION: Ensure all clients have the new fields if they were created before
-                let migrated = false;
-                clients = clients.map(client => {
-                    const updates = {};
-                    if (client.phone === undefined) { updates.phone = client.id === 1 ? '(87) 98888-8888' : (client.id === 2 ? '(87) 97777-7777' : ''); migrated = true; }
-                    if (client.address === undefined) { updates.address = client.id === 1 ? 'Rua Principal, 123' : (client.id === 2 ? 'Av. Brasil, 456' : ''); migrated = true; }
-                    if (client.cep === undefined) { updates.cep = client.id === 1 ? '56300-000' : (client.id === 2 ? '56300-111' : ''); migrated = true; }
-                    if (client.obs === undefined) { updates.obs = client.id === 1 ? 'Cliente prioritário' : ''; migrated = true; }
-                    
-                    return { ...client, ...updates };
-                });
-                
-                if (migrated) {
-                    localStorage.setItem('sistemac_clients', JSON.stringify(clients));
-                }
-            } else {
-                // Seed default clients with complete fields
-                clients = [
-                    { id: 1, name: 'André Cavalcante', email: 'eletronica10facil@gmail.com', cpf_cnpj: '919.046.610-17', city_state: 'Petrolina/Pe', phone: '(87) 98888-8888', address: 'Rua Principal, 123', cep: '56300-000', obs: 'Cliente prioritário' },
-                    { id: 2, name: 'Maria José de Souza', email: 'mariajosesouza@gmail.com', cpf_cnpj: '912.671.820-08', city_state: 'Petrolina/Pe', phone: '(87) 97777-7777', address: 'Av. Brasil, 456', cep: '56300-111', obs: '' }
-                ];
-                localStorage.setItem('sistemac_clients', JSON.stringify(clients));
-            }
 
-
-            // Filter logic
-            if(filterQuery) {
+            let filtered = clients;
+            if (filterQuery) {
                 const lowerQ = filterQuery.toLowerCase();
-                clients = clients.filter(c => 
-                    c.name.toLowerCase().includes(lowerQ) || 
-                    c.email.toLowerCase().includes(lowerQ) || 
-                    c.cpf_cnpj.includes(lowerQ)
+                filtered = clients.filter(c =>
+                    (c.nomeCompleto || '').toLowerCase().includes(lowerQ) ||
+                    (c.email || '').toLowerCase().includes(lowerQ) ||
+                    (c.documento || '').includes(lowerQ)
                 );
             }
-            
-            // Update counter
-            document.getElementById('client-count-num').innerText = clients.length;
 
-            clients.forEach(client => {
+            document.getElementById('client-count-num').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                listObj.innerHTML = '<p style="color:#94a3b8; text-align:center; padding: 40px 0;">Nenhum cliente encontrado.</p>';
+                return;
+            }
+
+            filtered.forEach(client => {
                 const newCard = document.createElement('div');
                 newCard.className = 'client-card';
-                newCard.setAttribute('data-id', client.id);
+                newCard.setAttribute('data-id', client._id);
+                const cidade = client.cidade && client.estado ? `${client.cidade}/${client.estado}` : (client.cidade || '');
                 newCard.innerHTML = `
                     <div class="client-info">
-                        <span class="name">${client.name}</span>
-                        <span class="sub-info">${client.email} • ${client.phone || 'Sem telefone'}</span>
-                        <span class="sub-info">${client.cpf_cnpj} • ${client.city_state}</span>
+                        <span class="name">${client.nomeCompleto || ''}</span>
+                        <span class="sub-info">${client.email || ''} • ${client.telefone || 'Sem telefone'}</span>
+                        <span class="sub-info">${client.documento || ''} • ${cidade}</span>
                     </div>
-
                     <div class="user-actions">
                         <button class="action-btn btn-edit">Editar</button>
                         <button class="action-btn btn-remove">Remover</button>
@@ -1339,9 +1315,33 @@
                 `;
                 listObj.appendChild(newCard);
             });
-            
-            // Ensure icons exist inside new cards
+
             lucide.createIcons();
+        }
+
+        async function loadClients(filterQuery = '') {
+            const listObj = document.getElementById('clients-list-container');
+            listObj.innerHTML = '<p style="color:#94a3b8; text-align:center; padding: 40px 0;">Carregando clientes...</p>';
+
+            try {
+                const response = await fetch(`${CONVEX_URL_CLIENTS}/api/query`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        path: 'users:listAll',
+                        args: {},
+                        format: 'json'
+                    })
+                });
+
+                const result = await response.json();
+                allClients = result.value || [];
+                renderClients(allClients, filterQuery);
+
+            } catch (err) {
+                console.error('Erro ao carregar clientes:', err);
+                listObj.innerHTML = '<p style="color:#ef4444; text-align:center; padding: 40px 0;">Erro ao carregar clientes do servidor.</p>';
+            }
         }
 
         // Call load for clients on startup
@@ -1349,7 +1349,7 @@
 
         // Search Input Listener
         document.getElementById('client-search').addEventListener('input', function(e) {
-            loadClients(e.target.value);
+            renderClients(allClients, e.target.value);
         });
 
         // Event delegation for Client Edit and Remove
@@ -1357,42 +1357,51 @@
             const card = e.target.closest('.client-card');
             if (!card) return;
 
-            const id = parseInt(card.getAttribute('data-id'));
-            
+            const convexId = card.getAttribute('data-id');
+
             // Remove Client
             if (e.target.classList.contains('btn-remove')) {
-                let clients = JSON.parse(localStorage.getItem('sistemac_clients') || '[]');
-                const clientIndex = clients.findIndex(c => c.id === id);
-                if (clientIndex === -1) return;
-                const client = clients[clientIndex];
+                const client = allClients.find(c => c._id === convexId);
+                if (!client) return;
 
-                if(confirm(`Tem certeza que deseja remover o cliente ${client.name}?`)) {
-                    clients.splice(clientIndex, 1);
-                    localStorage.setItem('sistemac_clients', JSON.stringify(clients));
-                    loadClients(document.getElementById('client-search').value);
+                if (confirm(`Tem certeza que deseja remover o cliente ${client.nomeCompleto}?`)) {
+                    fetch(`${CONVEX_URL_CLIENTS}/api/mutation`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            path: 'users:remove',
+                            args: { id: convexId },
+                            format: 'json'
+                        })
+                    }).then(() => {
+                        loadClients(document.getElementById('client-search').value);
+                    }).catch(err => {
+                        console.error('Erro ao remover cliente:', err);
+                        alert('Erro ao remover cliente. Tente novamente.');
+                    });
                 }
             }
 
             // Edit Client
             if (e.target.classList.contains('btn-edit')) {
-                openClientModal(id);
+                openClientModal(convexId);
             }
         });
 
-        window.openClientModal = function(id) {
-            let clients = JSON.parse(localStorage.getItem('sistemac_clients') || '[]');
-            const client = clients.find(c => c.id === id);
+        window.openClientModal = function(convexId) {
+            const client = allClients.find(c => c._id === convexId);
             if (!client) return;
 
-            document.getElementById('edit-client-id').value = client.id;
-            document.getElementById('edit-client-name').value = client.name;
-            document.getElementById('edit-client-email').value = client.email;
-            document.getElementById('edit-client-document').value = client.cpf_cnpj;
-            document.getElementById('edit-client-city').value = client.city_state;
-            document.getElementById('edit-client-phone').value = client.phone || '';
+            document.getElementById('edit-client-id').value = client._id;
+            document.getElementById('edit-client-name').value = client.nomeCompleto || '';
+            document.getElementById('edit-client-email').value = client.email || '';
+            document.getElementById('edit-client-document').value = client.documento || '';
+            const cidadeEstado = client.cidade && client.estado ? `${client.cidade}/${client.estado}` : (client.cidade || '');
+            document.getElementById('edit-client-city').value = cidadeEstado;
+            document.getElementById('edit-client-phone').value = client.telefone || '';
             document.getElementById('edit-client-cep').value = client.cep || '';
-            document.getElementById('edit-client-address').value = client.address || '';
-            document.getElementById('edit-client-obs').value = client.obs || '';
+            document.getElementById('edit-client-address').value = client.endereco ? `${client.endereco}, ${client.numero || ''}, ${client.bairro || ''}` : '';
+            document.getElementById('edit-client-obs').value = '';
 
             document.getElementById('modal-client').classList.add('active');
         };
@@ -1401,27 +1410,34 @@
             document.getElementById('modal-client').classList.remove('active');
         };
 
-        // Form Submit Editor Client
-        document.getElementById('client-edit-form').addEventListener('submit', function(e) {
+        // Form Submit Editor Client (salva via Convex)
+        document.getElementById('client-edit-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const id = parseInt(document.getElementById('edit-client-id').value);
-            let clients = JSON.parse(localStorage.getItem('sistemac_clients') || '[]');
-            const clientIndex = clients.findIndex(c => c.id === id);
-            if (clientIndex === -1) return;
+            const convexId = document.getElementById('edit-client-id').value;
 
-            const client = clients[clientIndex];
-            client.name = document.getElementById('edit-client-name').value;
-            client.email = document.getElementById('edit-client-email').value;
-            client.cpf_cnpj = document.getElementById('edit-client-document').value;
-            client.city_state = document.getElementById('edit-client-city').value;
-            client.phone = document.getElementById('edit-client-phone').value;
-            client.cep = document.getElementById('edit-client-cep').value;
-            client.address = document.getElementById('edit-client-address').value;
-            client.obs = document.getElementById('edit-client-obs').value;
-
-            localStorage.setItem('sistemac_clients', JSON.stringify(clients));
-            closeClientModal();
-            loadClients(document.getElementById('client-search').value);
+            try {
+                await fetch(`${CONVEX_URL_CLIENTS}/api/mutation`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        path: 'users:update',
+                        args: {
+                            id: convexId,
+                            nomeCompleto: document.getElementById('edit-client-name').value,
+                            email: document.getElementById('edit-client-email').value,
+                            documento: document.getElementById('edit-client-document').value,
+                            telefone: document.getElementById('edit-client-phone').value,
+                            cep: document.getElementById('edit-client-cep').value,
+                        },
+                        format: 'json'
+                    })
+                });
+                closeClientModal();
+                loadClients(document.getElementById('client-search').value);
+            } catch (err) {
+                console.error('Erro ao atualizar cliente:', err);
+                alert('Erro ao salvar. Tente novamente.');
+            }
         });
 
 
