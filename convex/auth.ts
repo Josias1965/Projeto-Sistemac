@@ -48,3 +48,32 @@ export const login = query({
     return user;
   },
 });
+
+export const resetPassword = mutation({
+  args: {
+    email: v.string(),
+    documento: v.string(),
+    newPassword: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_email", (q) => q.eq("email", args.email))
+      .unique();
+
+    if (!user) {
+      throw new Error("Usuário não encontrado");
+    }
+
+    // Verifica se o documento (CPF/CNPJ) confere com o e-mail para autorizar a troca
+    if (user.documento !== args.documento) {
+      throw new Error("Documento de verificação incorreto");
+    }
+
+    await ctx.db.patch(user._id, {
+      password: args.newPassword,
+    });
+    
+    return { success: true };
+  },
+});
